@@ -10,6 +10,7 @@ variable "ins_name" {
     default = ["A", "B"]
 }
 variable "http_port" {}
+variable "public_cidr" {}
 variable "ssl_policy" {}
 variable certificate_arn {}
 variable "https_port" {}

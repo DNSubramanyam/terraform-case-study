@@ -13,6 +13,7 @@ http_port = "80"
 ssl_policy = "ELBSecurityPolicy-TLS13-1-2-2021-06"
 certificate_arn = "arn:aws:acm:us-east-1:366951018568:certificate/51cf8fbd-0a32-4c9b-b866-acf1eeb73dcc"
 https_port = "443"
+public_cidr = "0.0.0.0/0"
 
 zone_id = "Z0400132321GG1WNTEYB4"
 url="tfcasestudy.subbu98.xyz"

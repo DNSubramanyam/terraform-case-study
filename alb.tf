@@ -1,18 +1,18 @@
-
-resource "aws_lb_target_group" "tf-cs-tg"{
+resource "aws_lb_target_group" "tf_cs_tg"{
     name = "tf-case-study-tg"
     vpc_id = data.aws_vpc.default.id
     target_type = "instance"
     port = var.http_port
     protocol = "HTTP"
+    tags = var.mandate_tags
 }
 
-resource "aws_lb_target_group_attachment" "tf-cs-tg-attchment"{
+resource "aws_lb_target_group_attachment" "tf_cs_tg_attchment"{
     for_each = {
         for k,v in aws_instance.web_servers:
         k=>v
     }
-    target_group_arn = aws_lb_target_group.tf-cs-tg.arn
+    target_group_arn = aws_lb_target_group.tf_cs_tg.arn
     target_id = each.value.id
     depends_on = [ aws_instance.web_servers ]
 }
@@ -22,7 +22,8 @@ resource "aws_lb" "tf_cs_alb" {
   internal           = false
   load_balancer_type = "application"
   subnets            = slice(data.aws_subnets.example.ids,0,2)
-  depends_on = [ aws_lb_target_group_attachment.tf-cs-tg-attchment ]
+  depends_on = [ aws_lb_target_group_attachment.tf_cs_tg_attchment ]
+  tags = var.mandate_tags
 }
 
 resource "aws_lb_listener" "front_end" {
@@ -34,21 +35,7 @@ resource "aws_lb_listener" "front_end" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.tf-cs-tg.arn
+    target_group_arn = aws_lb_target_group.tf_cs_tg.arn
   }
   depends_on = [ aws_lb.tf_cs_alb ]
 }
-
-resource "aws_route53_record" "example" {
-  zone_id = var.zone_id
-  name    = var.url
-  type    = "A"
-  alias {
-    name                   = aws_lb.tf_cs_alb.dns_name
-    zone_id                = aws_lb.tf_cs_alb.zone_id
-    evaluate_target_health = true
-  }
-
-  depends_on = [ aws_lb.tf_cs_alb ]
-}
-
