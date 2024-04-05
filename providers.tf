@@ -5,9 +5,9 @@ terraform {
     }
   }
   backend "s3"{
-    bucket = var.state_bucket
-    key = var.state_bucket_key
-    region = var.region
+    bucket = "tf-state-bucket-subbu"
+    key = "tf-case-study-project/terraform.tfstate"
+    region = "us-east-1"
   }
 }
 

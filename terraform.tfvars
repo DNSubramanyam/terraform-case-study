@@ -1,7 +1,5 @@
 region = "us-east-1"
 profile = "subbu-tf"
-state_bucket = "tf-state-bucket-subbu"
-state_bucket_key =  "tf-case-study-project/terraform.tfstate"
 
 ami_name="al2023-ami-2023.*-x86_64*"
 ins_type="t2.micro"

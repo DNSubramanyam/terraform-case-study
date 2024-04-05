@@ -52,30 +52,3 @@ resource "aws_instance" "this" {
   user_data               = "${file("userdata/${count.index}.sh")}"
   tags                    = merge(var.mandate_tags, {Name = "case-study-server-${var.ins_name[count.index]}"})
 }
-
-
-# resource "aws_lb_target_group" "tf-cs-tg"{
-#     name = "tf-case-study-tg"
-#     vpc_id = data.aws_vpc.default.id
-#     target_type = "alb"
-#     port = 80
-#     protocol = "HTTP"
-# }
-
-# resource "aws_lb_target_group_attachment" "tf-cs-tg-attchment"{
-#     for_each = {
-#         for k,v in aws_instance.this:
-#         k=>v
-#     }
-#     target_group_arn = aws_lb_target_group.tf-cs-tg.arn
-#     target_id = each.value.id
-# }
-
-output "result"{
-  value = {
-    ami-id = data.aws_ami.amazon_linux_2.id
-    out = data.aws_subnets.example.ids
-  }
-}
-
-
