@@ -9,5 +9,11 @@ variable "ins_name" {
     type = list
     default = ["A", "B"]
 }
+variable "http_port" {}
+variable "ssl_policy" {}
+variable certificate_arn {}
+variable "https_port" {}
 
 
+variable "zone_id" {}
+variable "url" {}

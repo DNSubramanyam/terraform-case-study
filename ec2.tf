@@ -15,9 +15,9 @@ resource "aws_security_group" "allow-http" {
 
 resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
   security_group_id = aws_security_group.allow-http.id
-  from_port         = 80
+  from_port         = var.http_port
   ip_protocol       = "tcp"
-  to_port           = 80
+  to_port           = var.http_port
   cidr_ipv4         = "0.0.0.0/0"
 }
 
@@ -43,12 +43,12 @@ data "aws_ami" "amazon_linux_2" {
   owners = ["amazon"]
 }
 
-resource "aws_instance" "this" {
+resource "aws_instance" "web_servers" {
   count                   = var.ins_count
   ami                     = data.aws_ami.amazon_linux_2.id
   instance_type           = var.ins_type
   subnet_id               = data.aws_subnets.example.ids[count.index]
-  security_groups         = [aws_security_group.allow-http.id]
+  vpc_security_group_ids         = [aws_security_group.allow-http.id]
   user_data               = "${file("userdata/${count.index}.sh")}"
-  tags                    = merge(var.mandate_tags, {Name = "case-study-server-${var.ins_name[count.index]}"})
+  tags                    = merge(var.mandate_tags, {Name = "case-study-web-server-${var.ins_name[count.index]}"})
 }
