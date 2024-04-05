@@ -1,6 +1,3 @@
-
-
-
 resource "aws_route53_record" "example" {
   zone_id = var.zone_id
   name    = var.url

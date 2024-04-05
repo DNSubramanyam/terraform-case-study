@@ -16,4 +16,4 @@ https_port = "443"
 public_cidr = "0.0.0.0/0"
 
 zone_id = "Z0400132321GG1WNTEYB4"
-url="tfcasestudy.subbu98.xyz"
+url="casestudy.subbu98.xyz"
