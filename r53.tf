@@ -8,6 +8,6 @@ resource "aws_route53_record" "example" {
     evaluate_target_health = true
   }
 
-  depends_on = [ aws_lb.tf_cs_alb ]
+  depends_on = [aws_lb.tf_cs_alb]
 }
 
